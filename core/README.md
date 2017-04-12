@@ -17,7 +17,6 @@ There is an example file in `config/example` to get you started.
 
 #### Remember to restart your container if you update the settings!
 ---
-
 ### config.json
 ```json
 {
@@ -69,6 +68,16 @@ Retype new password:
 {SHA512-CRYPT}$6$OA/BzvLzf7C9uohz$a9B0kCihcHsfnK.x4xJWHs9V7.eR5crVtSUn6hoe6p03oea34.uxkozRUw7RYu13z26xNniY3M1kZu4CgSVaB/
 ```
 See [Dovecot Wiki](http://wiki.dovecot.org/Authentication/PasswordSchemes) for more details on different schemes.
+
+### Sieve
+To filter spam mails via Sieve add a spam-global.sieve to the settings folder. If no spam-global.sieve configuration exists a default config will be copied there on startup.
+
+```
+require "fileinto";
+if header :contains "X-Spam-Flag" "YES" {
+  fileinto "Spam";
+}
+```
 
 ## Run
 Using the pre-built image from docker hub, you can start your email by running:

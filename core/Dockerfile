@@ -1,4 +1,4 @@
-FROM ubuntu:15.10
+FROM ubuntu:16.04
 
 ENV DEBIAN_FRONTEND noninteractive
 RUN locale-gen en_GB en_GB.UTF-8 && dpkg-reconfigure locales
@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     ssl-cert \
     postfix \
     dovecot-imapd \
+    dovecot-sieve \
     jq && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
@@ -21,6 +22,7 @@ RUN cat /etc/postfix/master-additional.cf >> /etc/postfix/master.cf
 # Dovecot configuration
 COPY ./config/dovecot /etc/dovecot/conf.d/
 COPY ./config/rsyslog.conf /etc/rsyslog.conf
+COPY ./config/spam-global.sieve /etc/spam-global.sieve
 
 # Copy boot scripts
 COPY boot /

@@ -1,0 +1,12 @@
+#!/bin/bash
+echo "Running `basename "$0"`"
+
+if [ !-d /vmail/sieve/ ]; then
+  mkdir /vmail/sieve/
+fi
+
+if [ -f /mail_settings/spam-global.sieve ]; then
+  cp /mail_settings/spam-global.sieve /vmail/sieve/spam-global.sieve
+else
+  cp /etc/spam-global.sieve /vmail/sieve/spam-global.sieve
+fi
