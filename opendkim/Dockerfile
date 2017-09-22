@@ -1,11 +1,10 @@
-FROM ubuntu:15.10
+FROM ubuntu:16.04
 
 ENV DEBIAN_FRONTEND noninteractive
-RUN locale-gen en_GB en_GB.UTF-8 && dpkg-reconfigure locales
 
 # Prerequisites
-RUN echo "#!/bin/sh\nexit 0" > /usr/sbin/policy-rc.d && \
-    apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y \
+    locales \
     opendkim \
     opendkim-tools \
     openssl \
@@ -13,6 +12,7 @@ RUN echo "#!/bin/sh\nexit 0" > /usr/sbin/policy-rc.d && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+RUN locale-gen en_GB en_GB.UTF-8 && dpkg-reconfigure locales
 COPY ./config/rsyslog.conf /etc/rsyslog.conf
 COPY ./config/opendkim /etc/opendkim
 COPY ./config/opendkim.conf etc/opendkim.conf
