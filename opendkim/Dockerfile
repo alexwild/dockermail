@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM debian:buster
 
 ENV DEBIAN_FRONTEND noninteractive
 
